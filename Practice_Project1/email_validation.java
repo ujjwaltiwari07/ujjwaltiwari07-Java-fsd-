@@ -1,27 +1,20 @@
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.commons.validator.routines.EmailValidator;
+public class EmailValidator {
+	
+	private static final String EMAIL_REGEX ="^[A-Za-z0-9+_.-]+@(.+)$";;
 
- class email_validation{
-   public static boolean isValidEmail(String email) {
-       
-	   email_validation validator = email_validation.getInstance();
+	private static Pattern pattern;
 
-       
-       return validator.isValid(email);
-   }
+	
+	private Matcher matcher;
 
-   public static void main(String[] args) {
-       List<String> emails = new ArrayList<String>();       emails.add("alice@example.com");
-       emails.add("alice.bob@example.com");
-       emails.add("alice@example.me.org");
-       
-       emails.add("alice.example.com");
-       emails.add("alice..bob@example.com");
-       emails.add("alice@.example.com");
+	public EmailValidator() {
+		
+		pattern = Pattern.compile(EMAIL_REGEX, Pattern.CASE_INSENSITIVE);
+	}
 
-       for (String value : emails) {
-           System.out.println("The Email address " + value + " is " + (isValidEmail(value) ? "valid" : "invalid"));
-       }
-   }
+	
+	public boolean validateEmail(String email) {
+		matcher = pattern.matcher(email);
+		return matcher.matches();
+	}
 }
